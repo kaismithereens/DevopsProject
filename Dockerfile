@@ -1,8 +1,8 @@
-FROM nginx: alpine
-MAINTENER Tea Torovic<tea.torovic@gmail.com>
+FROM nginx:alpine
+MAINTAINER Tea Torovic<tea.torovic@gmail.com>
 
-COPY website /website
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY ExerciseFiles/02_02_begin/website /website
+COPY ExerciseFiles/02_02_begin/nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
 
