@@ -1,0 +1,8 @@
+#Find all available Docker images
+https://hub.docker.com/search?q=
+
+#For this exercise we used official nging image from
+https://hub.docker.com/_/nginx
+
+#For this exercise we used Alpine Linux distribution.
+Alpine Linux is a Linux distribution designed to be small, simple and secure.
