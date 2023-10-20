@@ -1,0 +1,26 @@
+DIFFERENCE BETWEEN DOCKER RUN AND DOCKER COMPOSE
+
+The key difference between "docker run" versus "docker compose" is that docker run is entirely command line based, while docker-compose reads configuration data from a YAML file. 
+
+The second major difference is that "docker run" can only start one container at a time, while "docker compose" will configure and run multiple.
+In contrast to "docker run", "docker compose" allows for the configuration of multiple containers in a single YAML file. When the docker-compose up command runs, it will start every container referenced in the "docker-compose.yaml" file.
+
+If you wanted to use an Nginx container to test your website on your desktop computer, there are two available approaches:
+
+1. Start the Nginx container on the command line with docker run
+2. Start the Nginx with the docker compose up and a preconfigured YAML file
+
+
+COMMANDS USED in this exercise:
+
+docker compose --help
+
+docker compose run website
+
+docker compose up
+
+docker compose ps
+
+docker compose down
+
+
