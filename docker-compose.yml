@@ -3,3 +3,10 @@ services:
  website: 
    build: 
      context: .
+ unit-tests:
+  volumes: 
+   - $PWD: /app
+   build:
+    context: .
+    dockerfile: rspec.dockerfile
+
