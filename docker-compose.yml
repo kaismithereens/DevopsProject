@@ -1,12 +1,16 @@
-version: "3.8"
-services: 
- website: 
-   build: 
-     context: .
+version: '3.7'
+services:
+ website:
+  build:
+   context: .
+  ports:
+   - 80:80
  unit-tests:
-  volumes: 
-   - $PWD: /app
-   build:
-    context: .
-    dockerfile: rspec.dockerfile
-
+  build:
+   dockerfile: rspec.dockerfile
+   context: .
+  volumes:
+   - .:/app
+  command:
+   - --pattern
+   - spec/unit/*_spec.rb

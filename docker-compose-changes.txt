@@ -1,0 +1,13 @@
+Changes to rspec.dockerfile:
+
+- changed $PWD to '.' because PWD is not set for sudo users
+- updated path to test file from 
+  - '/app/spec/unit/page_spec.rb'
+  to
+  - 'spec/unit/page_spec.rb'
+
+- since PWD is not set for sudo, if I set it during command invocation
+  like here:
+    sudo PWD=${PWD} docker compose run --rm unit-tests
+  then I can use $PWD inside of docker environment as I have now
+  injected it to the running container.
