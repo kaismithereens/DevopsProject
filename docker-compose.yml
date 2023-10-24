@@ -1,11 +1,19 @@
 version: '3.7'
 services:
+ selenium: 
+  image: selenium/standalone-chrome-debug
+  ports:
+   - 4444:4444
+   - 5901:5900
  website:
   build:
    context: .
   ports:
    - 80:80
  unit-tests:
+  environment:
+   SELENIUM_HOST: selenium
+   SELENIUM_PORT: 4444
   build:
    dockerfile: rspec.dockerfile
    context: .
@@ -13,4 +21,4 @@ services:
    - .:/app
   command:
    - --pattern
-   - spec/unit/*_spec.rb
+   - /app/spec/unit/*_spec.rb
