@@ -1,0 +1,4 @@
+Following the exercise 3.4 I encountered an error as a result of changes to Capybara and Selenium API.
+To account for those changes I had to make several ajustments to page_spec.rb file.
+
+Capybara.register_driver :remote_selenium has been rewritten.
