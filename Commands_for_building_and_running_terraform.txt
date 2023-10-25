@@ -1,0 +1,26 @@
+#COMMAND TO BUILD A DOCKERFILE terraform.Dockerfile:
+
+sudo docker buildx build . -f terraform.Dockerfile
+
+#OUTPUT:
+[+] Building 7.1s (7/7) FINISHED                                                                                               
+ => [internal] load .dockerignore                                                                                         0.0s
+ => => transferring context: 2B                                                                                           0.0s
+ => [internal] load build definition from terraform.Dockerfile                                                            0.0s
+ => => transferring dockerfile: 266B                                                                                      0.0s
+ => [internal] load metadata for docker.io/library/alpine:latest                                                          1.9s
+ => [1/3] FROM docker.io/library/alpine@sha256:eece025e432126ce23f223450a0326fbebde39cdf496a85d8c016293fc851978           0.0s
+ => => resolve docker.io/library/alpine@sha256:eece025e432126ce23f223450a0326fbebde39cdf496a85d8c016293fc851978           0.0s
+ => => sha256:eece025e432126ce23f223450a0326fbebde39cdf496a85d8c016293fc851978 1.64kB / 1.64kB                            0.0s
+ => => sha256:48d9183eb12a05c99bcc0bf44a003607b8e941e1d4f41f9ad12bdcc4b5672f86 528B / 528B                                0.0s
+ => => sha256:8ca4688f4f356596b5ae539337c9941abc78eda10021d35cbc52659c74d9b443 1.47kB / 1.47kB                            0.0s
+ => [2/3] RUN wget -O /tmp/terraform.zip https://releases.hashicorp.com/terraform/1.6.2/terraform_1.6.2_linux_amd64.zip   3.1s
+ => [3/3] RUN unzip /tmp/terraform.zip -d /                                                                               1.5s
+ => exporting to image                                                                                                    0.5s 
+ => => exporting layers                                                                                                   0.5s 
+ => => writing image sha256:a7f7f83272b83d7c6c0d89cb75312e6b98e98b5c5ffbfd7f9b8b24eade86d70e                              0.0s 
+
+#COMMAND to run the container and install Terraform
+#CHECK to confitm that Terraform has been installed
+~ $ /terraform
+
