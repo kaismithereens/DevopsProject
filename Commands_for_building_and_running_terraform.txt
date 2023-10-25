@@ -21,6 +21,8 @@ sudo docker buildx build . -f terraform.Dockerfile
  => => writing image sha256:a7f7f83272b83d7c6c0d89cb75312e6b98e98b5c5ffbfd7f9b8b24eade86d70e                              0.0s 
 
 #COMMAND to run the container and install Terraform
+sudo docker container run --rm --interactive --tty terraform
+
 #CHECK to confitm that Terraform has been installed
 ~ $ /terraform
 
