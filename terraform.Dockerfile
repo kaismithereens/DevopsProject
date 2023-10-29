@@ -5,4 +5,4 @@ RUN wget -O /tmp/terraform.zip https://releases.hashicorp.com/terraform/1.6.2/te
 RUN unzip /tmp/terraform.zip -d /
 
 USER nobody
-
+ENTRYPOINT /terraform
