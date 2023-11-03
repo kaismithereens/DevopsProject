@@ -1,0 +1,10 @@
+terraform.io
+
+#AWS 
+https://registry.terraform.io/providers/hashicorp/aws/latest
+
+#Documentation for AWS:
+https://registry.terraform.io/providers/hashicorp/aws/latest/docs
+
+
+

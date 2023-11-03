@@ -1,0 +1,31 @@
+1. Made changes to terraform.Dockerfile -> Added ca-certification 
+
+2. Rebuild the docker file: sudo docker compose build terraform
+#output:
+(base) tea@tea-XPS-13-7390:~/DevopsProject$ sudo docker compose build terraform 
+[+] Building 7.6s (6/6) FINISHED                                                                                                                                       
+ => [terraform internal] load build definition from terraform.Dockerfile                                                                                          0.0s
+ => => transferring dockerfile: 340B                                                                                                                              0.0s
+ => [terraform internal] load .dockerignore                                                                                                                       0.0s
+ => => transferring context: 2B                                                                                                                                   0.0s
+ => [terraform internal] load metadata for docker.io/library/alpine:latest                                                                                        0.4s
+ => CACHED [terraform 1/2] FROM docker.io/library/alpine@sha256:eece025e432126ce23f223450a0326fbebde39cdf496a85d8c016293fc851978                                  0.0s
+ => [terraform 2/2] RUN wget -O /tmp/terraform.zip https://releases.hashicorp.com/terraform/1.6.2/terraform_1.6.2_linux_amd64.zip &&  unzip /tmp/terraform.zip -  6.3s
+ => [terraform] exporting to image                                                                                                                                0.8s
+ => => exporting layers                                                                                                                                           0.8s
+ => => writing image sha256:1a88c9e13d924fd81cf3500ee7c0f5142008c488928663e441bfa3d53fd66cb2                                                                      0.0s 
+ => => naming to docker.io/library/devopsproject-terraform      
+
+3. Ran the new image: sudo docker compose run --rm terraform init
+
+##output:
+(base) tea@tea-XPS-13-7390:~/DevopsProject$ sudo docker compose run --rm terraform init
+[+] Building 0.0s (0/0)                                                                                                                                                
+[+] Building 0.0s (0/0)                                                                                                                                                
+Terraform initialized in an empty directory!
+
+The directory has no Terraform configuration files. You may begin working
+with Terraform immediately by creating Terraform configuration files.
+
+
+
