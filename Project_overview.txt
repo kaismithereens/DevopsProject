@@ -1,0 +1,14 @@
+Parts of the project:
+
+1. Website Explore California.
+
+2. Dockerfile that allows us to run the website locally
+
+3. Unit tests written with Rspec to test the website using Capybara and Selenium to run those tests.
+
+4. Docker Compose so we can run all the commands in one place, together with the network that connects how all those pieces interact with wach other.
+
+5. Service that allows us to use Terraform.
+We use that Terraform service to deploy the website into AWS.
+
+6. Simple storage service (S3) -> copying our website into S3 bucket
