@@ -1,3 +1,9 @@
+variable "domain_name" {
+	description = "The name of the domain for our website."
+	default = "explorecalifornia.org"
+
+}
+
 data "aws_iam_policy_document" "bucket_policy" {
   statement {
     sid = "PublicReadGetObject"
