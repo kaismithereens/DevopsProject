@@ -1,3 +1,7 @@
+4.1.
+COMMAND:
+sudo docker run --rm --interactive --tty --entrypoint sh terraform
+
 1. Made changes to terraform.Dockerfile -> Added ca-certification 
 
 2. Rebuild the docker file: sudo docker compose build terraform
