@@ -2,6 +2,57 @@
 COMMAND:
 sudo docker run --rm --interactive --tty --entrypoint sh terraform
 
+4.2.
+COMMAND:
+1. sudo docker build --help
+Lists all the option the docker build command has. 
+
+We are going to use the --tag option to name our image so it is easier to find it. 
+We are going to use --file option to set the file from which the image is going to be built. Without this docker would search for the image in: PATH/Dockerfile.
+We are also going to set the contex to our working directory. This is important as docker is going to use this context to copy any files that it finds there into a temporary location, and it is going to use that to look for any files that the Dockerfile needs.
+
+2. sudo docker build --tag terraform --file terraform.Dockerfile .
+[+] Building 1.1s (8/8) FINISHED                                                
+ => [internal] load build definition from terraform.Dockerfile             0.0s
+ => => transferring dockerfile: 337B                                       0.0s
+ => [internal] load .dockerignore                                          0.0s
+ => => transferring context: 2B                                            0.0s
+ => [internal] load metadata for docker.io/library/alpine:latest           1.1s
+ => [1/4] FROM docker.io/library/alpine@sha256:eece025e432126ce23f223450a  0.0s
+ => CACHED [2/4] RUN wget -O /tmp/terraform.zip https://releases.hashicor  0.0s
+ => CACHED [3/4] RUN unzip /tmp/terraform.zip -d /                         0.0s
+ => CACHED [4/4] RUN apk add --no-cache ca-certificates curl               0.0s
+ => exporting to image                                                     0.0s
+ => => exporting layers                                                    0.0s
+ => => writing image sha256:0d13460e53fe0452d0e69361ec4f76c4ec70ecf7fd8bd  0.0s
+ => => naming to docker.io/library/terraform                               0.0s
+sudo docker run
+
+3.sudo docker run --help
+Lists all the option the docker run command has.
+
+We are going to use --rm option to remove the container once we are done using it.
+
+1. sudo docker run --rm terraform
+
+2. sudo docker run --rm terraform -version
+Terraform v1.6.2
+on linux_amd64
+
+4.3.
+1. Edited the docker-compose.yml
+Added service:terraform with build: , context: . and dockerfile: terraform.Dockerfile option
+
+2. sudo docker compose run --rm terraform
+
+4.4. AWS deployment explained
+
+4.5. 
+1. Created main.tf
+Terraform configuration file
+
+4.6.
+
 1. Made changes to terraform.Dockerfile -> Added ca-certification 
 
 2. Rebuild the docker file: sudo docker compose build terraform
@@ -24,12 +75,54 @@ sudo docker run --rm --interactive --tty --entrypoint sh terraform
 
 ##output:
 (base) tea@tea-XPS-13-7390:~/DevopsProject$ sudo docker compose run --rm terraform init
-[+] Building 0.0s (0/0)                                                                                                                                                
-[+] Building 0.0s (0/0)                                                                                                                                                
-Terraform initialized in an empty directory!
+[+] Building 0.0s (0/0)                                                                                                                                         [+] Building 0.0s (0/0)                                                         
 
-The directory has no Terraform configuration files. You may begin working
-with Terraform immediately by creating Terraform configuration files.
+Initializing provider plugins...
+- Finding latest version of hashicorp/aws...
+- Installing hashicorp/aws v5.24.0...
+╷
+│ Error: Failed to install provider
+│ 
+│ Error while installing hashicorp/aws v5.24.0: mkdir .terraform: permission
+│ denied
+╵
 
+4. Added command mv terraform to terraform.Dockerfile
+
+5. Rebuilt the new terraform image: sudo docker compose build terraform
+
+6. Ran the new image: sudo docker compose run --rm terraform init
+
+7. Added env_file: .env to docker-compose.yml
+
+8. Rebuilt the new terraform image: sudo docker compose build terraform
+
+ERROR: Failed to load /home/tea/DevopsProject/.env: open /home/tea/DevopsProject/.env: no such file or directory
+
+9. Removed env_file :.env from docker-compose.yml
+
+10. Used another terraform image.
+Changed terraform.Dockerfile FROM:  
+Removed User: nobody
+Removed wget:
+Rebuilt the new terraform image.
+
+11. (base) tea@tea-XPS-13-7390:~/DevopsProject$ sudo docker compose run --rm terraform init
+[+] Building 0.0s (0/0)                                                         
+[+] Building 0.0s (0/0)                                                         
+
+Initializing the backend...
+
+Initializing provider plugins...
+- Finding latest version of hashicorp/aws...
+- Installing hashicorp/aws v5.25.0...
+- Installed hashicorp/aws v5.25.0 (signed by HashiCorp)
+
+Terraform has created a lock file .terraform.lock.hcl to record the provider
+selections it made above. Include this file in your version control repository
+so that Terraform can guarantee to make the same selections by default when
+you run "terraform init" in the future.
+
+Terraform has been successfully initialized!
 
 
