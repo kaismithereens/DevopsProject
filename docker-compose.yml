@@ -1,9 +1,24 @@
 version: '3.7'
 services:
+ aws:
+  image: organs/awscli
+  environment:
+   AWS_ACCESS_KEY_ID: secretID
+   AWS_SECRET_ACCESS_KEY: secretAK
+   AWS_REGION: eu-central-1
+   AWS_DEFAULT_REGION: eu-central-1
+  volumes:
+   - .:/app
+  working_dir: /app
  terraform:
   build:
    context: .
    dockerfile: terraform.Dockerfile
+  environment:
+   AWS_ACCESS_KEY_ID: secretID
+   AWS_SECRET_ACCESS_KEY: secretAK
+   AWS_REGION: eu-central-1
+   AWS_DEFAULT_REGION: eu-central-1
   volumes:
    - .:/app
   working_dir: /app
@@ -13,6 +28,10 @@ services:
    - 4444:4444
    - 5901:5900
  website:
+  image: nginx:alpine
+  volumes:
+   - ./website:/website
+   - ./nginx.conf:/etc/nginx/nginx.conf
   build:
    context: .
   ports:
@@ -29,3 +48,18 @@ services:
   command:
    - --pattern
    - /app/spec/unit/*_spec.rb
+ integration-tests:
+  environment:
+   SELENIUM_HOST: selenium
+   SELENIUM_PORT: 4444
+   WEBSITE_URL: http://doesnot.exist
+  build:
+   dockerfile: rspec.dockerfile
+   context: .
+  volumes:
+   - .:/app
+  entrypoint: rspec
+  command:
+   - --pattern
+   - /app/spec/integration/*_spec.rb
+

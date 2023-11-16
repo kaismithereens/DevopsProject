@@ -1,0 +1,180 @@
+4.6. TERRAFORM INIT
+
+docker compose run --rm terraform init
+
+ls terraform/terraform.tfstate
+
+ADDED to terraform.Dockerfile
+apk add ca-certificates
+
+REBUILD the terraform image
+docker compose build terraform
+
+docker compose run --rm terraform init
+
+4.7. TERRAFORM PLAN
+
+ADDED to terraform.Dockerfile terraform service:
+  environment:
+   AWS_ACCESS_KEY_ID: "**********"
+   AWS_SECRET_ACCESS_KEY: "**********"
+   AWS_REGION: eu-central-1
+   AWS_DEFAULT_REGION: eu-central-1
+
+
+sudo docker compose run --rm terraform plan
+
+sudo docker compose run --rm terraform apply
+
+4.8. 
+
+CREATED S3 bucket named explorecaliforniaproject on AWS.
+
+updated main.tf
+1. arn:aws:s3:::explorecaliforniaproject{...
+	arn:aws:s3:::explorecaliforniaproject
+	}
+2. bucket = "explorecaliforniaproject"  // The name of the bucket.
+
+REBUILT terraform image
+sudo docker compose build terraform
+
+INITIALIZED terraform
+sudo docker compose run --rm terraform init
+
+PLAN 
+sudo docker compose run --rm terraform plan
+
+APPLY
+sudo docker compose run --rm terraform apply
+
+Error: creating Amazon S3 (Simple Storage) Bucket (explorecaliforniaproject): InvalidBucketAclWithObjectOwnership: Bucket cannot have ACLs set with ObjectOwnership's BucketOwnerEnforced setting
+│ 	status code: 400, request id: H2ADMMM57HMZ5108, host id: YzU3+LfXUWhJsUWzArn1BtycI4/R3jt0R4B+HxTnzYZE02zYu2TRKw1Y6BB83L8xVqWCNF3szQg=
+│ 
+│   with aws_s3_bucket.website,
+│   on main.tf line 26, in resource "aws_s3_bucket" "website":
+│   26: resource "aws_s3_bucket" "website" {
+
+
+Error: updating S3 Bucket (explorecaliforniaproject1) Policy: MalformedPolicy: Action does not apply to any resource(s) in statement
+│ 	status code: 400, request id: 1NMBX7828X80HF5E, host id: xhIwVRaM3gYkHA3+w1CNb3bwx2o169/5TrdFYY94yDYq8LmhqL8laUHEziz0ziOoWb2ZBBzyQO4VO8MdHYJuhQ==
+│ 
+│   with aws_s3_bucket.website,
+│   on main.tf line 26, in resource "aws_s3_bucket" "website":
+│   26: resource "aws_s3_bucket" "website" {
+
+UPDATED docker-compose.yml:
+
+1. ADDED new service: aws
+
+VISIT https://hub.docker.com/ for aws image:
+https://hub.docker.com/search?q=awscli
+
+2. RUN 
+COMMAND:
+sudo docker compose run --rm aws
+
+[+] Building 0.0s (0/0)                                                        
+[+] Running 3/3
+ ✔ aws 2 layers [⣿⣿]      0B/0B      Pulled                              10.6s 
+   ✔ ff3a5c916c92 Pull complete                                           1.3s 
+   ✔ 498880dbb8ba Pull complete                                           9.0s 
+[+] Building 0.0s (0/0)                                                        
+/app # 
+
+COMMAND:
+sudo docker compose run --rm --entrypoint aws aws
+
+[+] Building 0.0s (0/0)                                                        
+[+] Building 0.0s (0/0)                                                        
+usage: aws [options] <command> <subcommand> [<subcommand> ...] [parameters]
+To see help text, you can run:
+
+  aws help
+  aws <command> help
+  aws <command> <subcommand> help
+aws: error: too few arguments
+
+COMMAND:
+sudo docker compose run --rm --entrypoint aws aws ec2 describe-instances
+
+[+] Building 0.0s (0/0)                                                        
+[+] Building 0.0s (0/0)                                                        
+{
+    "Reservations": []
+}
+
+COMMAND:
+sudo docker compose run --rm terraform output
+
+*LOOK UP Linux mount command
+
+Error
+
+COMMAND:
+sudo docker compose run --rm --entrypoint aws aws s3 cp --recursive website/ s3://explorecaliforniaproject
+
+4.9.
+
+COMMAND:
+sudo docker compose run --rm --entrypoint aws aws s3 rm s3://explorecaliforniaproject1 --recursive
+
+COMMAND:
+sudo docker compose run --rm terraform destroy
+
+4.10.
+
+COMMAND
+sudo docker compose run --rm terraform plan
+
+COMMAND
+sudo docker compose run --rm terraform apply
+
+YES
+
+Edited docker-compose.yml -> Added integration-tests service
+
+4.11.
+
+COMMAND
+sudo docker compose up -d selenium
+
+COMMAND
+sudo docker compose run --rm integration-tests
+
+Error: missing valid webpage URL
+
+COMMAND:
+sudo docker compose run --rm terraform output
+
+COMMAND:
+sudo docker compose run --rm -e WEBSITE_URL=*************.amazonaws.com integration-tests
+
+Error: Failed unit tests as we need to copy the website into the bucket
+
+COMMAND:
+sudo docker compose run --rm --entrypoint aws aws s3 cp website/ s3://explorecalifornia.org --recursive
+
+COMMAND:
+sudo docker compose run --rm -e WEBSITE_URL=*************.amazonaws.com integration-tests
+
+COMMAND:
+sudo docker compose run --rm terraform destroy
+
+YES
+
+Failed because the bucket was not empty.
+
+COMMAND:
+sudo docker compose run --rm --entrypoint aws aws s3 rm s3://explorecalifornia.org --recursive
+
+COMMAND:
+sudo docker compose run --rm terraform destroy
+
+YES
+
+COMMAND:
+sudo docker compose down
+
+WRAP UP:
+made several changes to docker-compose.yml file to keeo data for AWS private. This will impact the ability to run the docker-compose without errors as it will not be able to connect to the AWS account and therefore building the webpage will fail.
