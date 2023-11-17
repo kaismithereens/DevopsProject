@@ -1,0 +1,39 @@
+5.1.
+
+VISIT hub.docker.com to find the image
+/jenkins/jenkins
+
+VISIT plugins.jenkins.io to find the plugins you need
+
+WRITE plugins.txt
+WRITE jenkins.Dockerfile
+EDIT docker-compose.yml -> ADD jenkins service
+
+COMMAND:
+sudo docker compose up jenkins
+
+NOTE: ran as user:root to be able to access/execute some files.
+NOTE: ran the container on port 8081 instead of 8080.
+
+5.2.
+
+CREATED Jenkinsfile
+
+VISIT https://www.jenkins.io/doc/book/pipeline/ for documentation.
+VISIT https://www.jenkins.io/doc/book/pipeline/syntax/
+
+5.3.
+
+COMMAND:
+git init
+
+COMMAND:
+git checkout -b master
+
+COMMAND:
+git add -A
+
+COMMAND:
+git commit -m "Initialize repository."
+
+

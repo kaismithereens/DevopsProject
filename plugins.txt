@@ -1,0 +1,4 @@
+workflow-aggregator # jenkins pipeline as code
+seed
+git
+
