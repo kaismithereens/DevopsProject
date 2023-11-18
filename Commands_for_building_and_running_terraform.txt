@@ -23,6 +23,6 @@ sudo docker buildx build . -f terraform.Dockerfile
 #COMMAND to run the container and install Terraform
 sudo docker container run --rm --interactive --tty terraform
 
-#CHECK to confitm that Terraform has been installed
+#CHECK to confirm that Terraform has been installed
 ~ $ /terraform
 
